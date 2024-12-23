@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANWEBPAGES - Secure and Creative</title>
+    <link rel="icon" href="./anlogo.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1{
+            font-size: 40px;
+            font-family:Century ;
+        }
+
+        h2 {
+            font-size: 35px;
+            font-family: Rockwell;
+        }
+
+        #loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .spinner {
+            display: flex;
+            gap: 0.5rem;
+            animation: spin 3s linear infinite;
+        }
+
+        .symbol {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #21c2e2;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        header {
+            text-align: center;
+            padding: 1rem;
+            background: #67d1e6;
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            background: #333;
+            padding: 0.5rem 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background: #21c2e2;
+        }
+
+        button:hover{
+            background-color:#040c4b ;
+            color:white;
+        }
+
+        main {
+            padding: 1rem;
+        }
+
+        .features {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .feature-card {
+            border: 1px solid #b5e9f3;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #b5e9f3;
+            font-size:25px;
+            font-family:Bell MT;
+        }
+
+        section {
+            margin: 2rem 0;
+        }
+
+        .smooth-animation {
+            font-size: 30px;
+            font-weight: bold;
+            color: #e7e8e8;
+            text-align: center;
+            font-family: Bell MT;
+            padding: 1rem;
+            border: 2px solid #54686c;
+            border-radius: 10px;
+            background-color: #54686c;
+            animation: smoothFade 3s ease-out infinite alternate;
+        }
+
+        @keyframes smoothFade {
+            0% { transform: scale(0.9); opacity: 0.8; color: #e9eff0; }
+            50% { transform: scale(1); opacity: 1; color: #e9eff0; }
+            100% { transform: scale(0.9); opacity: 0.8; color: #e9eff0; }
+        } 
+
+
+        form button:hover {
+            background: #21c2e2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .carousel {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+        }
+
+        .carousel-item {
+            min-width: 200px;
+            padding: 1rem;
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background: #333;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+
+            .features {
+                flex-direction: column;
+            }
+
+            .carousel-item {
+                min-width: 150px;
+            }
+        }
+
+        .mediator-info {
+            background-color: #54686c;
+            padding: 1rem;
+            border: 1px solid #54686c;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .mediator-info p {
+            font-size: 1.3rem;
+            color: #fcf7f7;
+        }
+
+        .join{
+            border: 1px solid #b5e9f3;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #b5e9f3;
+            font-size:25px;
+            font-family:Bell MT;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loadingScreen = document.getElementById("loading");
+            const joinButton = document.querySelector('button');
+            const form = document.querySelector('form');
+            const contactMessage = document.createElement('p');
+            const mediatorButton = document.getElementById("mediatorButton");
+
+            setTimeout(() => {
+                loadingScreen.style.display = "none";
+            }, 3000);
+
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 50,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Form submission handler
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                form.style.display = "none"; // Hide form after submission
+
+                // Show confirmation message after form submission
+                contactMessage.textContent = "We will contact you soon!";
+                contactMessage.style.fontSize = "1.5rem";
+                contactMessage.style.fontWeight = "bold";
+                contactMessage.style.color = "#21c2e2";
+                contactMessage.style.textAlign = "center";
+                contactMessage.style.padding = "1rem";
+                contactMessage.style.border = "2px solid #21c2e2";
+                contactMessage.style.borderRadius = "10px";
+                form.parentElement.appendChild(contactMessage); // Add message to the section
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div id="loading">
+        <div class="spinner">
+            <div class="symbol">A</div>
+            <div class="symbol">N</div>
+            <div class="symbol">W</div>
+            <div class="symbol">E</div>
+            <div class="symbol">B</div>
+            <div class="symbol">P</div>
+            <div class="symbol">A</div>
+            <div class="symbol">G</div>
+            <div class="symbol">E</div>
+            <div class="symbol">S</div>
+        </div>
+        <p>Secure, Safe, and Innovative Websites</p>
+    </div>
+
+    <!-- Home Page -->
+    <header>
+        <img src="./anlogo.png" height="130px" width="130px" style="float: left; margin-right: 13px;">
+        <h1>Welcome to ANWEBPAGES</h1>
+        <p style="font-size: 17px;">Your Gateway to Secure and Creative Websites</p>
+    </header>
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#how-websites-are-useful">How Websites Are Useful</a>
+        <a href="#join">Join Us</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+
+    <main>
+        <!-- Features Section -->
+        <section id="features">
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature-card">Creative Designs <br> <img src="./creative.png" height="200px" width="200px"></div>
+                <div class="feature-card">Secure & Safe Websites <br> <img src="./safeandsecure.png" height="200px" width="170px"></div>
+                <div class="feature-card">Very low & Affordable prices  <br> <img src="./lowprice.png" height="200px" width="220px"></div>
+                <div class="feature-card">Customizable Solutions  <br> <img src="./customised.png" height="200px" width="180px"></div>
+            </div>
+        </section>
+
+        <!-- How Websites Are Useful Section -->
+        <section id="how-websites-are-useful">
+            <h2>How Websites Are Useful?</h2>
+            <div class="smooth-animation">Websites help businesses connect with customers globally!</div><br>
+            <div class="smooth-animation">Websites are a platform for innovation and creativity!</div><br>
+            <div class="smooth-animation">Websites improve accessibility and customer engagement!</div>
+        </section>
+
+        <!-- Join Us Section -->
+        <section id="join">
+            <h2>Join Us</h2>
+            <p style="font-size: 25px;">Would you like to have a website for your business? Let us know!</p>
+            <center><a href="./joinus.html"><button class="join">Join Now</button></a></center>
+        </section>
+
+         <!-- Mediator Button and Info -->
+         <section id="mediator">
+            <h2  style="font-size: 30px;">Is your job to act as a mediator for connecting businesses with web developers?</h2>
+            <div class="mediator-info">
+                <p>If yes, you're in the right place. Your role will be to connect me with businesses that need a website for their operations. You’ll help identify potential clients, communicate their needs, and refer them to us for web development services.</p>
+            </div><br>
+            <center><a href="./leads.html"><button class="join">Any leads?</button></a></center>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <center><a href="./contactus.html"><button class="join">Contact Us</button></a></center>
+
+        </section>
+
+        <!-- Demo Websites Carousel -->
+        <section id="demo-websites">
+            <h2>Demo Websites</h2>
+            <div class="carousel">
+                <div class="carousel-item">Demo 1</div>
+                <div class="carousel-item">Demo 2</div>
+                <div class="carousel-item">Demo 3</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 ANWEBPAGES - All Rights Reserved</p>
+    </footer>
+</body>
+</html>
